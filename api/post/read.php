@@ -7,14 +7,26 @@
   include_once '../../models/Post.php';
 
   // Instantiate DB & connect
-  $database = new Database();
+  $database = new Database("mysql:host=127.0.0.1:3306;dbname=myblog", "root", "!QAZ2wsx");
   $db = $database->connect();
 
   // Instantiate blog post object
   $post = new Post($db);
 
+  if(isset($_GET['orgId'])){
+  $post->organisation_id = isset($_GET['orgId']) ? $_GET['orgId'] : die();
+    // Blog post query
+  $result = $post->readByOrgId();
+}else if(isset($_GET['catId'])){
+  $post->category_id = isset($_GET['catId']) ? $_GET['catId'] : die();
+    // Blog post query
+  $result = $post->readByCatId();
+}
+else{
+
   // Blog post query
   $result = $post->read();
+}
   // Get row count
   $num = $result->rowCount();
 
@@ -29,11 +41,13 @@
 
       $post_item = array(
         'id' => $id,
-        'title' => $title,
+        'topic' => $topic,
         'body' => html_entity_decode($body),
         'author' => $author,
         'category_id' => $category_id,
-        'category_name' => $category_name
+        'category_name' => $category_name,
+        'organisation_id' => $organisation_id,
+        'user_id' => $user_id
       );
 
       // Push to "data"

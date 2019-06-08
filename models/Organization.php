@@ -64,7 +64,7 @@
     }
 
     // Create Post
-    public function create() {
+    public function create($name) {
           // Create query
           $query = 'INSERT INTO ' . $this->table . ' SET name = :name, abbreviation = :abbreviation, brief = :brief, industry_id = :industry_id';
 
@@ -87,17 +87,14 @@
             echo "stmt";
             print_r($stmt);
             echo "stmt";
-            return $stmt->insert_id;
-            ;
+            return $this->conn->lastInsertId();;
       }
 
       // Print error if something goes wrong
       printf("Error: %s.\n", $stmt->error);
 
       return false;
-    }
-
-    // Update Post
+    }    // Update Post
     public function update() {
           // Create query
           $query = 'UPDATE ' . $this->table . '

@@ -26,7 +26,9 @@
     'body' => $post->body,
     'author' => $post->author,
     'category_id' => $post->category_id,
-    'category_name' => $post->category_name
+    'category_name' => $post->category_name,
+    'organisation_id' => $post->organisation_id,
+    'user_id' => $post->user_id
   );
 
   // Make JSON
